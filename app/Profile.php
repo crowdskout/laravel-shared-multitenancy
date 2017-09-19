@@ -21,8 +21,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
  */
 class Profile extends \Eloquent
 {
-    public static $collectionList = ['names', 'emails'];
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -39,6 +37,13 @@ class Profile extends \Eloquent
         return $this->hasMany('App\Name');
     }
 
+    /**
+     * Adds constraints for $sourceIds to eager loaded collections
+     * This will limit profile data to only the source ids passed in
+     *
+     * @param Builder $profile
+     * @param array $sourceIds
+     */
     public function scopeInSources(Builder $profile, array $sourceIds = [])
     {
         $sourceConstraint = function ($query) {

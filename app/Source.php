@@ -29,6 +29,12 @@ class Source extends \Eloquent
         return $this->belongsToMany('App\Customer', 'customer_sources');
     }
 
+    /**
+     * Adds a constraint for only sources that the given customer has access to
+     *
+     * @param Builder $query
+     * @param $customerId
+     */
     public function scopeFromCustomer(Builder $query, $customerId)
     {
         $query->whereHas('customers', function (Builder $query) use ($customerId) {
@@ -36,11 +42,21 @@ class Source extends \Eloquent
         });
     }
 
+    /**
+     * Returns Source models that the current user has access to
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public static function permissioned()
     {
         return self::whereIn('id', self::permissionedIds())->get();
     }
 
+    /**
+     * Returns source ids that the current user has access to
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public static function permissionedIds()
     {
         return \DB::table('customer_users as u')

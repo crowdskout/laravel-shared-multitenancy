@@ -56,6 +56,8 @@ class HomeController extends Controller
     }
 
     /**
+     * Prepares a profile and it's collections for output in the view
+     *
      * @param Profile $profile
      * @return array
      */
