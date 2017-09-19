@@ -19,7 +19,7 @@ class CreateCustomerSourcesTable extends Migration
             $table->integer('source_id', false, true);
             $table->timestamps();
 
-            $table->index(['customer_id', 'source_id']);
+            $table->unique(['customer_id', 'source_id']);
             $table->index(['source_id', 'customer_id']);
         });
     }
