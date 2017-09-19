@@ -12,7 +12,7 @@
         <tbody>
         @foreach($table as $row)
             @if (isset($row['id']))
-                <tr onclick="window.location.assign('profile/{{ $row['id'] }}');">
+                <tr onclick="window.location.assign('/profile/{{ $row['id'] }}');">
             @else
                 <tr>
                     @endif

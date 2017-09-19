@@ -27,6 +27,24 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $table = $this->getProfileQuery()->limit(20)->get()->map([$this, 'transformProfile']);
+        return view('home', ['table' => $table->toArray()]);
+    }
+
+    public function profile($profileId)
+    {
+        $table = $this->getProfileQuery()->where('id', '=', $profileId)->get()->map([$this, 'transformProfile']);
+        return view('home', ['table' => $table->toArray()]);
+    }
+
+    /**
+     * Returns a profile model with source id constraints and eager loaded collections
+     *
+     * @return Profile|Builder
+     */
+    public function getProfileQuery()
+    {
+        // assemble source id constraints from query params
         $sourceIds = [];
         if ($customerId = \Request::input('customer')) {
             $sourceIds = Source::fromCustomer($customerId)->pluck('id')->toArray();
@@ -34,18 +52,13 @@ class HomeController extends Controller
             $sourceIds = [$sourceId];
         }
 
-        $profile = Profile::with(['names', 'emails'])->inSources($sourceIds)->limit(20);
-
-        $table = $profile->get()->map([$this, 'transformProfile']);
-        return view('home', ['table' => $table->toArray()]);
+        return Profile::with(['names', 'emails'])->inSources($sourceIds);
     }
 
-    public function profile($profileId)
-    {
-        $profile = Profile::with(['names', 'emails'])->find($profileId);
-        return view('home', ['table' => [self::transformProfile($profile)]]);
-    }
-
+    /**
+     * @param Profile $profile
+     * @return array
+     */
     public static function transformProfile(Profile $profile)
     {
         return [

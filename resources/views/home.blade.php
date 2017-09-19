@@ -8,10 +8,16 @@
                 <div class="panel-heading">
                     <a href="{{ url('/home') }}" class="btn">Profile Dashboard</a>
                     @foreach(Auth::user()->customers as $customer)
-                        <a href="{{ Request::url() }}?customer={{ $customer->id }}" class="btn">{{ $customer->name }}</a>
+                        <a
+                            href="{{ Request::url() }}?customer={{ $customer->id }}"
+                            class="btn {{ Request::input('customer') == $customer->id ? 'active' : ''}}"
+                        >{{ $customer->name }}</a>
                     @endforeach
                     @foreach(\App\Source::permissioned() as $source)
-                        <a href="{{ Request::url() }}?source={{ $source->id }}" class="btn">{{ $source->name }}</a>
+                        <a
+                            href="{{ Request::url() }}?source={{ $source->id }}"
+                            class="btn {{ Request::input('source') == $source->id ? 'active' : ''}}"
+                        >{{ $source->name }}</a>
                     @endforeach
                 </div>
 
