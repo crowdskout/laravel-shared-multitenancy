@@ -25,8 +25,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\CustomerUser[] $customerUsers
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Customer[] $customers
  */
 class User extends Authenticatable
 {
@@ -49,12 +47,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function customers()
-    {
-        return $this->belongsToMany('App\Customer');
-    }
 }

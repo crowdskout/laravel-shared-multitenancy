@@ -18,11 +18,9 @@ class CreateNamesTable extends Migration
             $table->char('first', 255)->nullable();
             $table->char('last', 255)->nullable();
             $table->integer('profile_id', false, true);
-            $table->integer('source_id', false, true);
             $table->timestamps();
 
             $table->index('profile_id');
-            $table->index('source_id');
         });
     }
 

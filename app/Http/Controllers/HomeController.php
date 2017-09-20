@@ -44,15 +44,7 @@ class HomeController extends Controller
      */
     public function getProfileQuery()
     {
-        // assemble source id constraints from query params
-        $sourceIds = [];
-        if ($customerId = \Request::input('customer')) {
-            $sourceIds = Source::fromCustomer($customerId)->pluck('id')->toArray();
-        } else if ($sourceId = \Request::input('source')) {
-            $sourceIds = [$sourceId];
-        }
-
-        return Profile::with(['names', 'emails'])->inSources($sourceIds);
+        return Profile::with(['names', 'emails']);
     }
 
     /**
@@ -68,14 +60,12 @@ class HomeController extends Controller
             'names' => $profile->names->map(function (Name $name) {
                 return [
                     'first' => $name->first,
-                    'last' => $name->last,
-                    'source_id' => $name->source_id
+                    'last' => $name->last
                 ];
             })->toArray(),
             'emails' => $profile->emails->map(function (Email $email) {
                 return [
-                    'email' => $email->email,
-                    'source_id' => $email->source_id
+                    'email' => $email->email
                 ];
             })->toArray()
         ];
