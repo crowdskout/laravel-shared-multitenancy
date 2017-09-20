@@ -7,6 +7,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4><a href="{{ url('/home') }}">Profile Dashboard</a></h4>
+
+                    <button class="btn btn-info" data-toggle="collapse" data-target="#customers">Customers</button>
+                    <div id="customers" class="">
+                        @foreach(Auth::user()->customers as $customer)
+                            <a  role="button"
+                                href="{{ Request::url() }}?customer={{ $customer->id }}"
+                                class="btn btn-outline-info btn-sm {{ Request::input('customer') == $customer->id ? 'active' : ''}}"
+                            >{{ $customer->name }}</a>
+                        @endforeach
+                    </div>
                 </div>
 
                 <div class="panel-body">
