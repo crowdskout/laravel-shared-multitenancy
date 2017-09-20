@@ -14,8 +14,24 @@ namespace App;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Customer whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Customer whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Customer whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Source[] $sources
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
  */
 class Customer extends \Eloquent
 {
-    //
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function sources()
+    {
+        return $this->belongsToMany('App\Source');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
+    }
 }

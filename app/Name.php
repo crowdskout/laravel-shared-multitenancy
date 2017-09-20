@@ -22,8 +22,21 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Name whereProfileId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Name whereSourceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Name whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Profile[] $profiles
  */
 class Name extends \Eloquent
 {
-    //
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('source', function (Builder $builder) {
+            $builder->whereIn('source_id', Source::permissionedIds());
+        });
+    }
 }

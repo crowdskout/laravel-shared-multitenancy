@@ -20,8 +20,21 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Email whereProfileId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Email whereSourceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Email whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Profile[] $profiles
  */
 class Email extends \Eloquent
 {
-    //
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('source', function (Builder $builder) {
+            $builder->whereIn('source_id', Source::permissionedIds());
+        });
+    }
 }

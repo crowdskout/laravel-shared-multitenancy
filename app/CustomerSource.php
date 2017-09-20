@@ -3,31 +3,31 @@
 namespace App;
 
 /**
- * App\CustomerUser
+ * App\CustomerSource
  *
  * @mixin \Illuminate\Database\Eloquent\Model
  * @property int $id
  * @property int $customer_id
- * @property int $user_id
+ * @property int $source_id
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerUser whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerUser whereCustomerId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerUser whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerUser whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerUser whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerSource whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerSource whereCustomerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerSource whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerSource whereSourceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CustomerSource whereUpdatedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Customer[] $customers
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Source[] $sources
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
  */
-class CustomerUser extends \Eloquent
+class CustomerSource extends \Eloquent
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'customer_user';
+    protected $table = 'customer_source';
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -42,7 +42,7 @@ class CustomerUser extends \Eloquent
      */
     public function sources()
     {
-        return $this->belongsToMany('App\Source', 'customer_source', 'customer_id', 'customer_id');
+        return $this->hasMany('App\Source');
     }
 
     /**
@@ -50,6 +50,6 @@ class CustomerUser extends \Eloquent
      */
     public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsToMany('App\User', 'customer_user', 'customer_id', 'customer_id');
     }
 }
