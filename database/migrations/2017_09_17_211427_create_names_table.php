@@ -15,9 +15,9 @@ class CreateNamesTable extends Migration
     {
         Schema::create('names', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('profile_id', false, true);
             $table->char('first', 255)->nullable();
             $table->char('last', 255)->nullable();
-            $table->integer('profile_id', false, true);
             $table->timestamps();
 
             $table->index('profile_id');
