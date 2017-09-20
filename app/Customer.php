@@ -24,7 +24,7 @@ class Customer extends \Eloquent
      */
     public function sources()
     {
-        return $this->belongsToMany('App\Source', 'customer_sources');
+        return $this->belongsToMany('App\Source');
     }
 
     /**
@@ -32,6 +32,6 @@ class Customer extends \Eloquent
      */
     public function users()
     {
-        return $this->belongsToMany('App\User', 'customer_users');
+        return $this->belongsToMany('App\User');
     }
 }

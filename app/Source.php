@@ -26,7 +26,7 @@ class Source extends \Eloquent
      */
     public function customers()
     {
-        return $this->belongsToMany('App\Customer', 'customer_sources');
+        return $this->belongsToMany('App\Customer');
     }
 
     /**
@@ -59,8 +59,8 @@ class Source extends \Eloquent
      */
     public static function permissionedIds()
     {
-        return \DB::table('customer_users as u')
-            ->join('customer_sources as s', 'u.customer_id', '=', 's.customer_id')
+        return \DB::table('customer_user as u')
+            ->join('customer_source as s', 'u.customer_id', '=', 's.customer_id')
             ->where('u.user_id', '=', \Auth::id())
             ->distinct()
             ->pluck('s.source_id');

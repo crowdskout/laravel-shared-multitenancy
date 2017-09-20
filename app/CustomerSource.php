@@ -23,6 +23,13 @@ namespace App;
 class CustomerSource extends \Eloquent
 {
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'customer_source';
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function customers()
@@ -43,6 +50,6 @@ class CustomerSource extends \Eloquent
      */
     public function users()
     {
-        return $this->belongsToMany('App\User', 'customer_users', 'customer_id', 'customer_id');
+        return $this->belongsToMany('App\User', 'customer_user', 'customer_id', 'customer_id');
     }
 }
