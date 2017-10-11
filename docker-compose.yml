@@ -9,7 +9,7 @@ services:
         volumes:
             - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
             - "./etc/ssl:/etc/ssl"
-            - "../laravel-shared-multitenancy:/var/www/html"
+            - ".:/var/www/html"
         depends_on:
             - php
             - mysqldb
@@ -18,11 +18,11 @@ services:
         restart: always
         volumes:
             - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
-            - "../laravel-shared-multitenancy:/var/www/html"
+            - ".:/var/www/html"
     composer:
         image: "composer"
         volumes:
-            - "../laravel-shared-multitenancy:/app"
+            - ".:/app"
         command: install
     mysqldb:
         image: mysql
@@ -37,6 +37,6 @@ services:
             - MYSQL_USER=${DB_USERNAME}
             - MYSQL_PASSWORD=${DB_PASSWORD}
         ports:
-            - "3306:3306"
+            - "${DB_PORT}:${DB_PORT}"
         volumes:
             - "./data/db/mysql:/var/lib/mysql"
