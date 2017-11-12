@@ -7,13 +7,13 @@ Example of a shared multitenancy data model using Laravel and MySQL
 3. Start the docker container
 > make docker-start
 5. SSH into the docker container
->* ./ssh.sh
+> ./ssh.sh
 6. Migrate and seed
->* php artisan migrate:fresh
->* php artisan db:seed
+> php artisan migrate:fresh
+> php artisan db:seed
 
 ## Usage
-1. Connect to MySQ shell:
+1. Connect to MySQL shell:
 > ./mysql.sh
 2. Grab an email address from the users table
 > select email from users limit 5;
@@ -26,3 +26,6 @@ Example of a shared multitenancy data model using Laravel and MySQL
 >* username: dev
 >* password: dev
 >* database: test
+
+### Disclaimer
+This project is meant to showcase a relational data model and Laravel Eloquent implementation for shared multitenancy.  It is not meant to be run in a production environment without significant changes.
